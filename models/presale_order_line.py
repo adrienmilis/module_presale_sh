@@ -8,7 +8,7 @@ class OrderLine(models.Model):
 
     # Attributes #
 
-    quantity = fields.Integer(required=True)
+    quantity = fields.Integer(required=True, default=1)
     price = fields.Float(required=True)  # from the product
 
     # Relations #

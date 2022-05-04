@@ -13,6 +13,7 @@
 		<field name="arch" type="xml">
             <form>
                 <header>
+                    <button name="action_validate_order" type="object" string="Validate" states="draft"/>
                     <field name="state" widget="statusbar"/>
                 </header>
                 <sheet>
@@ -26,7 +27,7 @@
                                 <tree editable="bottom">
                                     <field name="product_id"/>
                                     <field name="quantity"/>
-                                    <field name="price"/>
+                                    <field name="price" string="Unit Price"/>
                                 </tree>
                             </field>
                         </page>

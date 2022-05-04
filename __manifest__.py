@@ -1,7 +1,7 @@
 {
     'name': 'presale',
     'application': True,
-    'depends': ['base', 'product', 'sales'],
+    'depends': ['base', 'product', 'sale_management'],
     'data': [
         'data/presale_order_sequence.xml',
         'views/presale_order_views.xml',

@@ -1,4 +1,4 @@
-from odoo import models, fields, api
+from odoo import models, fields, api, Command
 
 
 class Order(models.Model):
@@ -11,9 +11,9 @@ class Order(models.Model):
     name = fields.Char(
         string='Order Reference',
         required=True,
-        readonly=True,
+        # readonly=True,
         copy=False,
-        default=lambda self: ('New')
+        default='New',
     )
 
     # Relations #
@@ -33,10 +33,36 @@ class Order(models.Model):
     )
     active = fields.Boolean(default=True)
 
-    # name = fields.Char(string='Order Reference', required=True, copy=False, readonly=True, states={'draft': [('readonly', False)]}, index=True, default=lambda self: _('New'))
+    # Overrides #
 
     @api.model
     def create(self, vals):
         if vals.get('name') == 'New':
             vals['name'] = self.env['ir.sequence'].get('presale.order') or 'New'
         return super().create(vals)
+
+    # Buttons #
+
+    def _get_product_description(self, product):
+        default_code = f'[{product.default_code}]' if product.default_code else ""
+        description_sale = f'\n{product.description_sale}' if product.description_sale else ""
+        return '{} {}{}'.format(default_code, product.name, description_sale)
+
+    def _get_sale_order_line_values(self):
+        return [{
+            'product_id': order_line_id.product_id.id,
+            'name': self._get_product_description(order_line_id.product_id),
+            'price_unit': order_line_id.price,
+            'product_uom_qty': order_line_id.quantity,
+        } for order_line_id in self.order_line_ids]
+
+    def action_validate_order(self):
+
+        self.ensure_one()
+        self.env['sale.order'].create({
+            'partner_id': self.customer_id.id,
+            'order_line': [
+                Command.create(vals) for vals in self._get_sale_order_line_values()
+            ],
+        })
+        self.state = 'confirmed'
