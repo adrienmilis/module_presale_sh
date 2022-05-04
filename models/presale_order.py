@@ -11,16 +11,15 @@ class Order(models.Model):
     name = fields.Char(
         string='Order Reference',
         required=True,
-        # readonly=True,
+        readonly=True,
         copy=False,
-        states={'draft': [('readonly', False)]},
         default=lambda self: ('New')
     )
 
     # Relations #
 
     customer_id = fields.Many2one('res.partner', required=True, string='Customer')
-    # order_line_ids
+    order_line_ids = fields.One2many('presale.order.line', 'order_id', string='Order Lines')
 
     # Default fields #
 
