@@ -76,3 +76,8 @@ class Order(models.Model):
         })
         self.state = 'confirmed'
         self._send_validation_mail()
+
+    # Cron #
+
+    def _cron_archive_confirmed_presale_orders(self):
+        self.env['presale.order'].search([('state', '=', 'confirmed')]).active = False

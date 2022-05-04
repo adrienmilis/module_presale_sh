@@ -8,5 +8,6 @@
         'views/sale_order_views.xml',
         'security/ir.model.access.csv',
         'views/presale_menus.xml',
+        'data/ir_cron_data.xml',
     ],
 }

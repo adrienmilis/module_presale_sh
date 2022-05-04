@@ -47,4 +47,14 @@
             </tree>
         </field>
     </record>
+
+    <record id="presale_order_view_search" model="ir.ui.view">
+        <field name="name">presale.order.search</field>
+        <field name="model">presale.order</field>
+        <field name="arch" type="xml">
+            <search>
+                <filter string="Archived" name="archived" domain="[('active', '=', False)]"/>
+            </search>
+        </field>
+    </record>
 </odoo>
