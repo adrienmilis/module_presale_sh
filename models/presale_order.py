@@ -72,6 +72,7 @@ class Order(models.Model):
             'order_line': [
                 Command.create(vals) for vals in self._get_sale_order_line_values()
             ],
+            'presale_order_id': self.id,
         })
         self.state = 'confirmed'
         self._send_validation_mail()
