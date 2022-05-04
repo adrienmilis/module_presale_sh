@@ -56,6 +56,14 @@ class Order(models.Model):
             'product_uom_qty': order_line_id.quantity,
         } for order_line_id in self.order_line_ids]
 
+    def _send_validation_mail(self):
+        validation_mail = self.env['mail.mail'].create({
+            'email_to': self.create_uid.email,
+            'subject': self.name,
+            'body_html': f'Your presale order {self.name} has been validated.',
+        })
+        validation_mail.send()
+
     def action_validate_order(self):
 
         self.ensure_one()
@@ -66,3 +74,4 @@ class Order(models.Model):
             ],
         })
         self.state = 'confirmed'
+        self._send_validation_mail()
