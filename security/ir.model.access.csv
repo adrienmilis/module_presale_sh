@@ -1,3 +1,6 @@
 id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
-presale.access_presale_order,access_presale_order,presale.model_presale_order,base.group_user,1,1,1,1
-presale.access_presale_order_line,access_presale_order_line,presale.model_presale_order_line,base.group_user,1,1,1,1
+presale.access_presale_order_user,access_presale_order_user,presale.model_presale_order,presale.group_presale_user,1,1,1,1
+presale.access_presale_order_line_user,access_presale_order_line_user,presale.model_presale_order_line,presale.group_presale_user,1,1,1,1
+
+presale.access_presale_order_admin,access_presale_order_admin,presale.model_presale_order,base.group_system,1,1,1,1
+presale.access_presale_order_line_admin,access_presale_order_line_admin,presale.model_presale_order_line,base.group_system,1,1,1,1

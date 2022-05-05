@@ -6,8 +6,10 @@
         'data/presale_order_sequence.xml',
         'views/presale_order_views.xml',
         'views/sale_order_views.xml',
-        'security/ir.model.access.csv',
         'views/presale_menus.xml',
+        'security/security.xml',
+        'security/ir.model.access.csv',
         'data/ir_cron_data.xml',
     ],
+    'category': 'Presale/Presale',
 }

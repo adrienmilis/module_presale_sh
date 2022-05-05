@@ -1,4 +1,5 @@
 from odoo import models, fields, api, Command
+from odoo.exceptions import UserError
 
 
 class Order(models.Model):
@@ -67,6 +68,8 @@ class Order(models.Model):
     def action_validate_order(self):
 
         self.ensure_one()
+        if not self.order_line_ids:
+            raise UserError("Presale orders without products cannot be validated")
         self.env['sale.order'].create({
             'partner_id': self.customer_id.id,
             'order_line': [
