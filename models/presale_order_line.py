@@ -20,3 +20,10 @@ class OrderLine(models.Model):
     def _onchange_price(self):
         for record in self:
             record.price = record.product_id.list_price
+
+    # Constraints #
+
+    _sql_constraints = [
+        ('quantity_strictly_positive', 'CHECK(quantity > 0)', 'The quantity must be strictly positive.'),
+        ('price_positive', 'CHECK(price >= 0)', 'The unit price must be positive.')
+    ]

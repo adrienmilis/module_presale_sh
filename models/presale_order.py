@@ -12,7 +12,6 @@ class Order(models.Model):
     name = fields.Char(
         string='Order Reference',
         required=True,
-        # readonly=True,
         copy=False,
         default='New',
     )
@@ -58,7 +57,7 @@ class Order(models.Model):
         } for order_line_id in self.order_line_ids]
 
     def _send_validation_mail(self):
-        validation_mail = self.env['mail.mail'].create({
+        validation_mail = self.env['mail.mail'].sudo().create({
             'email_to': self.create_uid.email,
             'subject': self.name,
             'body_html': f'Your presale order {self.name} has been validated.',
@@ -68,6 +67,7 @@ class Order(models.Model):
     def action_validate_order(self):
 
         self.ensure_one()
+        self.env['presale.order'].check_access_rights('write')
         if not self.order_line_ids:
             raise UserError("Presale orders without products cannot be validated")
         self.env['sale.order'].create({

@@ -9,6 +9,9 @@
             <xpath expr="//field[@name='date_order']" position="after">
                 <field name="presale_order_id"/>
             </xpath>
+            <xpath expr="//button[@name='action_quotation_send']" position="attributes">
+                <attribute name="groups">presale.group_presale_user,base.group_system</attribute>
+            </xpath>
         </field>
     </record>
 
